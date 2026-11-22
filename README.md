@@ -8,7 +8,7 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 - **Headings:** bold Orange in Claude's replies
 - **Your messages:** Blurple boxes with white text and a thin Orange border
 - **Status colors:** Forest Green for success, Steel Blue for code accents
-- **Watermark:** the Pearson circle mark as a quiet knockout in the upper-left corner, gray in light mode and white in dark mode (the brand kit's grayscale and white knockout variants); hidden on narrow windows and phones
+- **Watermark:** the Pearson circle mark as a quiet knockout in the upper-right corner, clear of the sidebar, gray in light mode and white in dark mode (the brand kit's grayscale and white knockout variants); hidden on narrow windows and phones
 
 The terminal and editor plugins don't draw themes, so it shows only in the desktop and mobile apps.
 

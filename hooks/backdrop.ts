@@ -15,10 +15,12 @@ const KNOCKOUT = `
     <path class="knockout" d="${DISC} ${PANELS} ${FLAPS}" fill-rule="evenodd"/>
   </g>`
 
-// A quiet watermark in the upper-left gutter, below the title bar and beside
-// the chat column, where a letterhead's mark sits. It is drawn in a 1000-unit
-// square fitted to the window's shorter side and pinned to the top left, so it
-// stays round and
+// A quiet watermark in the upper-right gutter, below the toolbar and beside
+// the chat column. The backdrop spans the whole window and the sidebar covers
+// its left side when open, so the mark sits on the right, which stays clear
+// with the sidebar open or closed. It is drawn in a 1000-unit square fitted
+// to the window's shorter side and pinned to the top right, so it stays round
+// and
 // keeps its corner at any size: about 120 px tall in a 1100 px window, never
 // near the 36 px brand minimum. Windows too narrow to leave a gutter for it,
 // and phones, show the plain ground.
@@ -38,7 +40,7 @@ export const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" heigh
     <clipPath id="disc"><path d="${DISC}"/></clipPath>
   </defs>
   <rect class="ground" width="100%" height="100%"/>
-  <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMinYMin meet">
-    <g class="mark" transform="translate(37 74) scale(0.3127)">${KNOCKOUT}</g>
+  <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMaxYMin meet">
+    <g class="mark" transform="translate(870 74) scale(0.2817)">${KNOCKOUT}</g>
   </svg>
 </svg>`
