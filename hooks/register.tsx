@@ -4,8 +4,12 @@ import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
 import { addRoutines, registerRoutines } from './routines.js'
 
-// The Pearson circle mark as a faint watermark behind the conversation.
-const BASE: ThemeSetArgs = { colors: theme, backdrop: { scene: 'pearson-mark' } }
+// The Pearson circle mark as a faint watermark behind the conversation. No
+// blur on the panels over it, so the mark's straight edges stay crisp.
+const BASE: ThemeSetArgs = {
+  colors: theme,
+  backdrop: { scene: 'pearson-mark', glass: { blur: 0 } },
+}
 
 // Brand type treatment: bold headings in Orange, your messages in a Blurple
 // bar (like the Pearson slide header), tool rows quiet and gray.
