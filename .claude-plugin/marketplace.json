@@ -1,0 +1,5 @@
+{
+  "name": "pearson-claude-theme",
+  "owner": { "name": "smreed32" },
+  "plugins": [{ "name": "pearson-theme", "source": "./" }]
+}
