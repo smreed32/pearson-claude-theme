@@ -1,8 +1,10 @@
 import type { Register, ThemeSetArgs } from 'claude-code'
 
+import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
 
-const BASE: ThemeSetArgs = { colors: theme }
+// The Pearson circle mark as a faint watermark behind the conversation.
+const BASE: ThemeSetArgs = { colors: theme, backdrop: { scene: 'pearson-mark' } }
 
 // Brand type treatment: bold headings in Orange, your messages in a Blurple
 // bar (like the Pearson slide header), tool rows quiet and gray.
@@ -24,6 +26,16 @@ const LOOK: ThemeSetArgs = {
 }
 
 export const register: Register = on => {
+  on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
+    if ((e.surface !== 'desktop' && e.surface !== 'mobile') || e.props.scene !== 'pearson-mark') {
+      return next(e)
+    }
+
+    const { Svg } = $.ui.resolve(e)
+
+    return <Svg source={SCENE} alt="The Pearson Packaging Systems circle mark, faint in the corner" />
+  })
+
   on('session.start', async ($, e, next) => {
     const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))
 
