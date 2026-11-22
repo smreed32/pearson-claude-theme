@@ -27,7 +27,7 @@ claude plugin install pearson-theme --marketplace smreed32/pearson-claude-theme
 
 In the desktop app: click **+** next to the prompt box, then **Plugins** → **Add marketplace** with `smreed32/pearson-claude-theme`, then **Add plugin**.
 
-Answer `y` to add the marketplace, then choose the user scope. This repository is private, so installing requires read access on GitHub and a git credential for github.com on the computer (`gh auth login`, then `gh auth setup-git`).
+Answer `y` to add the marketplace, then choose the user scope. The repository is public, so no GitHub account or login is needed.
 
 ## Files
 
