@@ -12,6 +12,17 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 
 The terminal and editor plugins don't draw themes, so it shows only in the desktop and mobile apps.
 
+## Slash commands
+
+Shortcuts for the Service Parts routines. Each one asks Claude to run the matching skill, so that skill has to be enabled in your Claude account; without it, Claude will say it can't find it.
+
+| Command | What it does | Skill it uses |
+| --- | --- | --- |
+| `/categorize` | Categorizes the uncategorized emails in the Service Parts inbox | `serviceparts-categorizer` |
+| `/conexiom` | Forwards new POs in the Service Parts inbox to Conexiom | `serviceparts-conexiom-forwarder` |
+| `/quotes` | Builds a new Unconverted Quote Workbook from the latest export | `unconverted-quote-workbook` |
+| `/manual <machine number>` | Finds a machine's manual on the P: drive and zips it to ShareFile | `manual-search` |
+
 ## Install
 
 At the prompt of a Claude Code terminal session:
@@ -35,4 +46,6 @@ Answer `y` to add the marketplace, then choose the user scope. The repository is
 - `hooks/colors.ts`: the brand palette and the light and dark color sets
 - `hooks/register.tsx`: applies the theme when a session starts and draws the watermark
 - `hooks/backdrop.ts`: the Pearson mark, traced as vector shapes from the brand kit
+- `hooks/routines.ts`: the slash commands for the Service Parts routines
+- `tests/routines.test.ts`: tests for the slash commands (`claude plugin test .`)
 - `hooks/make-colors.js`: the color builder from Claude's design system (don't edit)

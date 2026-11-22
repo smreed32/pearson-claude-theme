@@ -2,6 +2,7 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
+import { addRoutines, registerRoutines } from './routines.js'
 
 // The Pearson circle mark as a faint watermark behind the conversation.
 const BASE: ThemeSetArgs = { colors: theme, backdrop: { scene: 'pearson-mark' } }
@@ -26,6 +27,8 @@ const LOOK: ThemeSetArgs = {
 }
 
 export const register: Register = on => {
+  addRoutines(on)
+
   on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
     if ((e.surface !== 'desktop' && e.surface !== 'mobile') || e.props.scene !== 'pearson-mark') {
       return next(e)
@@ -37,6 +40,8 @@ export const register: Register = on => {
   })
 
   on('session.start', async ($, e, next) => {
+    await registerRoutines($)
+
     const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))
 
     if (unpainted !== undefined) {
