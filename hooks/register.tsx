@@ -3,11 +3,13 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
 
-// The Pearson circle mark as a faint watermark behind the conversation. No
-// blur on the panels over it, so the mark's straight edges stay crisp.
+// The gradient and the Pearson mark behind the conversation. The app lays a
+// tinted glass over a backdrop (60% by default), which all but hid the
+// gradient and dulled the logo; the gradient already fades out behind the
+// text, so the glass is kept thin and unblurred.
 const BASE: ThemeSetArgs = {
   colors: theme,
-  backdrop: { scene: 'pearson-mark', glass: { blur: 0 } },
+  backdrop: { scene: 'pearson-mark', glass: { blur: 0, opacity: 0.15 } },
 }
 
 // Brand type treatment: bold headings in Orange, your messages in a Blurple
