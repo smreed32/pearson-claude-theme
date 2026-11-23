@@ -16,31 +16,21 @@ const LOGO = `
     <path d="${FLAPS}" fill="${BRAND.gray}"/>
   </g>`
 
-// The logo in the left margin, between the open sidebar and the chat column,
-// level with the top of the conversation. The backdrop spans the whole window
-// and the sidebar (about 523 px) covers its left side, so the logo is placed
-// from the window's width: the chat column (about 915 px) is centered in the
-// space right of the sidebar, and the logo is centered in the margin to its
-// left. When that margin is too narrow for it (a window under about 1760 px),
-// and on phones, the logo is hidden rather than drawn behind the text. With
-// the sidebar closed the chat column moves left over this spot, so the logo
-// is meant for working with the sidebar open.
-const SIDEBAR = 523
-const COLUMN = 915
-const SIZE = 112
-const TOP = 85
-const HIDE_BELOW = SIDEBAR + COLUMN + 2 * (SIZE + 48)
-
+// A corner badge in the upper-right gutter, below the toolbar and beside the
+// chat column. The backdrop spans the whole window and the sidebar covers its
+// left side when open, so the mark sits on the right, which stays clear with
+// the sidebar open or closed. It is drawn in a 1000-unit square fitted to the
+// window's shorter side and pinned to the top right, so it stays round and
+// keeps its corner at any size: about 115 px tall in a 1100 px window, never
+// near the 36 px brand minimum. Windows too narrow to leave a gutter for it,
+// and phones, show the plain ground.
 export const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
   <style>
     .ground { fill: #f1f2f6; }
     @media (prefers-color-scheme: dark) {
       .ground { fill: #1b1c2b; }
     }
-    .mark {
-      transform: translate(calc(${SIDEBAR}px + (100vw - ${SIDEBAR + COLUMN}px) / 4 - ${SIZE / 2}px), ${TOP}px);
-    }
-    @media (max-width: ${HIDE_BELOW - 1}px) {
+    @media (max-width: 1299px) {
       .mark { display: none; }
     }
   </style>
@@ -48,7 +38,7 @@ export const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" heigh
     <clipPath id="disc"><path d="${DISC}"/></clipPath>
   </defs>
   <rect class="ground" width="100%" height="100%"/>
-  <g class="mark">
-    <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 355 355">${LOGO}</svg>
-  </g>
+  <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMaxYMin meet">
+    <g class="mark" transform="translate(870 74) scale(0.2817)">${LOGO}</g>
+  </svg>
 </svg>`
