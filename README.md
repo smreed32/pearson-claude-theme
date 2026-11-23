@@ -14,7 +14,7 @@ It shows in the **Code** tab of the desktop app. Cowork, regular chats, claude.a
 
 ## Quick links panel
 
-A **Pearson quick links** panel opens beside the chat when a session starts. Type `/links` to bring it back after closing it. It holds:
+A **Pearson quick links** panel opens beside the chat when a session starts, where the app shows panels from plugins. (The Claude desktop app doesn't show it yet.) It holds:
 
 - **Routines:** buttons for the categorizer, the Conexiom forwarder and the quote workbook
 - **Folders:** P: drive manuals (`P:\Manuals\Archive`) and ShareFile manuals (`S:\Personal Folders\Manuals`), opened in File Explorer
@@ -24,15 +24,14 @@ To change what it holds, edit the `FOLDERS` and `SITES` lists at the top of `hoo
 
 ## Slash commands
 
-Shortcuts for the Service Parts routines. Each one asks Claude to run the matching skill, so that skill has to be enabled in your Claude account; without it, Claude will say it can't find it.
+Shortcuts for the Service Parts routines, in `commands/`. Each one asks Claude to run the matching skill, so that skill has to be enabled in your Claude account; without it, Claude will say it can't find it. Type `/` and the start of the name (for example `/categ`) to find one; the full names start with `pearson-theme:`.
 
 | Command | What it does | Skill it uses |
 | --- | --- | --- |
-| `/categorize` | Categorizes the uncategorized emails in the Service Parts inbox | `serviceparts-categorizer` |
-| `/conexiom` | Forwards new POs in the Service Parts inbox to Conexiom | `serviceparts-conexiom-forwarder` |
-| `/quotes` | Builds a new Unconverted Quote Workbook from the latest export | `unconverted-quote-workbook` |
-| `/manual <machine number>` | Finds a machine's manual on the P: drive and zips it to ShareFile | `manual-search` |
-| `/links` | Opens the quick links panel | |
+| `/pearson-theme:categorize` | Categorizes the uncategorized emails in the Service Parts inbox | `serviceparts-categorizer` |
+| `/pearson-theme:conexiom` | Forwards new POs in the Service Parts inbox to Conexiom | `serviceparts-conexiom-forwarder` |
+| `/pearson-theme:quotes` | Builds a new Unconverted Quote Workbook from the latest export | `unconverted-quote-workbook` |
+| `/pearson-theme:manual <machine number>` | Finds a machine's manual on the P: drive and zips it to ShareFile | `manual-search` |
 
 ## Install
 
@@ -57,7 +56,8 @@ Answer `y` to add the marketplace, then choose the user scope. The repository is
 - `hooks/colors.ts`: the brand palette and the light and dark color sets
 - `hooks/register.tsx`: applies the theme when a session starts and draws the watermark
 - `hooks/backdrop.ts`: the Pearson mark, traced as vector shapes from the brand kit
-- `hooks/routines.ts`: the slash commands for the Service Parts routines
-- `hooks/quicklinks.tsx`: the quick links panel and `/links`
-- `tests/`: tests for the slash commands and the panel (`claude plugin test .`)
+- `commands/`: the slash commands for the Service Parts routines
+- `hooks/routines.ts`: the routines behind the panel's buttons
+- `hooks/quicklinks.tsx`: the quick links panel
+- `tests/`: tests for the panel (`claude plugin test .`)
 - `hooks/make-colors.js`: the color builder from Claude's design system (don't edit)

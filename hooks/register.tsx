@@ -2,8 +2,7 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
-import { addQuickLinks, openQuickLinks, registerLinksCommand } from './quicklinks.js'
-import { addRoutines, registerRoutines } from './routines.js'
+import { addQuickLinks, openQuickLinks } from './quicklinks.js'
 
 // The Pearson circle mark as a faint watermark behind the conversation. No
 // blur on the panels over it, so the mark's straight edges stay crisp.
@@ -32,7 +31,6 @@ const LOOK: ThemeSetArgs = {
 }
 
 export const register: Register = on => {
-  addRoutines(on)
   addQuickLinks(on)
 
   on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
@@ -46,8 +44,6 @@ export const register: Register = on => {
   })
 
   on('session.start', async ($, e, next) => {
-    // Every command first, together, so all are in the list the app reads.
-    await Promise.all([registerRoutines($), registerLinksCommand($)])
     openQuickLinks($)
 
     const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))

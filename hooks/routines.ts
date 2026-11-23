@@ -1,14 +1,14 @@
-import type { EngineInterface, On } from 'claude-code'
+import type { EngineInterface } from 'claude-code'
 
-// Slash commands for the Service Parts routines. Each one asks Claude to run
-// the matching skill, so the skill has to be enabled in your Claude account.
+// The Service Parts routines, for the quick-links panel's buttons. The slash
+// commands for them are the files in commands/, which the app reads when the
+// plugin is installed; keep the wording of the two in step.
 type Routine = {
   name: string
   description: string
   skill: string
   ask: string
-  argumentHint?: string
-  needsArgs?: string
+  needsArgs?: boolean
 }
 
 const ROUTINES: readonly Routine[] = [
@@ -35,28 +35,9 @@ const ROUTINES: readonly Routine[] = [
     description: "Find a machine's manual on the P: drive and zip it to ShareFile",
     skill: 'manual-search',
     ask: 'Find the manual folder on the P: drive for machine',
-    argumentHint: '<machine number>',
-    needsArgs: 'Add the machine number, for example: /manual BI18',
+    needsArgs: true,
   },
 ]
-
-// Called from session.start.
-export async function registerRoutines($: EngineInterface) {
-  // All at once: the app reads the command list once as the session starts,
-  // and a command registered after that never shows up in it.
-  await Promise.all(
-    ROUTINES.map(r =>
-      $.command
-        .register({
-          name: r.name,
-          description: r.description,
-          ...(r.argumentHint === undefined ? {} : { argumentHint: r.argumentHint }),
-        })
-        // Another plugin or skill already owns the name: leave it to that one.
-        .catch(error => $.ui.log(`/${r.name} not added: ${String(error)}`)),
-    ),
-  )
-}
 
 // The routines the quick-links panel offers as buttons: the ones that need no
 // machine number.
@@ -65,9 +46,8 @@ export const PANEL_ROUTINES = ROUTINES.filter(r => r.needsArgs === undefined).ma
   description: r.description,
 }))
 
-// Asks Claude to run a routine's skill. Sent just after the caller returns, as
-// a command can't wait on its own prompt; it starts its own turn once the
-// session is idle.
+// Asks Claude to run a routine's skill. Sent just after the button's press
+// settles; it starts its own turn once the session is idle.
 export function askRoutine($: EngineInterface, name: string, args = '') {
   const r = ROUTINES.find(one => one.name === name)
   if (r === undefined) {
@@ -76,19 +56,4 @@ export function askRoutine($: EngineInterface, name: string, args = '') {
   const ask = args === '' ? r.ask : `${r.ask} ${args}.`
   const text = `${ask} Use the ${r.skill} skill.`
   $.clock.after(10, () => void $.prompt.submit({ text, asUser: true }))
-}
-
-export function addRoutines(on: On) {
-  for (const r of ROUTINES) {
-    on('command.run', { command: r.name }, async ($, e) => {
-      const args = e.args.trim()
-
-      if (r.needsArgs !== undefined && args === '') {
-        return { text: r.needsArgs, isTextDisplayOnly: true }
-      }
-      askRoutine($, r.name, args)
-
-      return { text: `${r.description}: asking Claude now…`, isTextDisplayOnly: true }
-    })
-  }
 }
