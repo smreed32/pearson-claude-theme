@@ -29,38 +29,36 @@ const LOGO = `
 // Pearson Orange glow rising from the bottom right, both fading out toward
 // the middle so the conversation sits on a calm, even ground. The glows are
 // gentle in light mode and warmer in dark mode, where they read as light.
+// Each glow's colors are written on its gradient (not in the style sheet,
+// which a surface may not apply to gradients); the style sheet only picks
+// which pair of glows shows, light or dark, the way it hides the logo.
+const glow = (id: string, cx: number, cy: number, r: number, color: string, opacity: number) => `
+    <radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">
+      <stop offset="0" stop-color="${color}" stop-opacity="${opacity}"/>
+      <stop offset="1" stop-color="${color}" stop-opacity="0"/>
+    </radialGradient>`
+
 export const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
   <style>
     .ground { fill: #f1f2f6; }
-    .cool0 { stop-color: ${BRAND.blurple}; stop-opacity: 0.2; }
-    .cool1 { stop-color: ${BRAND.blurple}; stop-opacity: 0; }
-    .warm0 { stop-color: ${BRAND.orange}; stop-opacity: 0.2; }
-    .warm1 { stop-color: ${BRAND.orange}; stop-opacity: 0; }
+    .dark { display: none; }
     @media (prefers-color-scheme: dark) {
       .ground { fill: #1b1c2b; }
-      .cool0 { stop-color: #5a5d9e; stop-opacity: 0.5; }
-      .cool1 { stop-color: #5a5d9e; stop-opacity: 0; }
-      .warm0 { stop-color: #ff5a1a; stop-opacity: 0.55; }
-      .warm1 { stop-color: #ff5a1a; stop-opacity: 0; }
+      .light { display: none; }
+      .dark { display: inline; }
     }
     @media (max-width: 1299px) {
       .mark { display: none; }
     }
   </style>
   <defs>
-    <clipPath id="disc"><path d="${DISC}"/></clipPath>
-    <radialGradient id="cool" cx="0.12" cy="0.05" r="0.95">
-      <stop offset="0" class="cool0"/>
-      <stop offset="1" class="cool1"/>
-    </radialGradient>
-    <radialGradient id="warm" cx="0.92" cy="1.02" r="0.8">
-      <stop offset="0" class="warm0"/>
-      <stop offset="1" class="warm1"/>
-    </radialGradient>
+    <clipPath id="disc"><path d="${DISC}"/></clipPath>${glow('coolLight', 0.12, 0.05, 0.95, BRAND.blurple, 0.2)}${glow('warmLight', 0.92, 1.02, 0.8, BRAND.orange, 0.2)}${glow('coolDark', 0.12, 0.05, 0.95, '#5a5d9e', 0.5)}${glow('warmDark', 0.92, 1.02, 0.8, '#ff5a1a', 0.55)}
   </defs>
   <rect class="ground" width="100%" height="100%"/>
-  <rect width="100%" height="100%" fill="url(#cool)"/>
-  <rect width="100%" height="100%" fill="url(#warm)"/>
+  <rect class="light" width="100%" height="100%" fill="url(#coolLight)"/>
+  <rect class="light" width="100%" height="100%" fill="url(#warmLight)"/>
+  <rect class="dark" width="100%" height="100%" fill="url(#coolDark)"/>
+  <rect class="dark" width="100%" height="100%" fill="url(#warmDark)"/>
   <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMaxYMin meet">
     <g class="mark" transform="translate(870 74) scale(0.2817)">${LOGO}</g>
   </svg>
