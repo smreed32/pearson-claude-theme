@@ -4,6 +4,7 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 
 - **Light mode:** cool off-white surfaces, Blurple (`#343551`) text, Dark Gray / Gray secondary text
 - **Dark mode:** deep Blurple/Navy surfaces with warm-white text
+- **Background:** a soft gradient, a Blurple glow from the top left blending into a Pearson Orange glow at the bottom right, fading out behind the conversation
 - **Accent:** Pearson Orange (`#e54102`) for links, buttons and highlights
 - **Headings:** bold Orange in Claude's replies
 - **Your messages:** Blurple boxes with white text and a thin Orange border
