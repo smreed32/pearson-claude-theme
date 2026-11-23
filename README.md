@@ -12,16 +12,6 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 
 It shows in the **Code** tab of the desktop app. Cowork, regular chats, claude.ai in a browser, the terminal and editor plugins don't draw themes.
 
-## Quick links panel
-
-A **Pearson quick links** panel opens beside the chat when a session starts, where the app shows panels from plugins. (The Claude desktop app doesn't show it yet.) It holds:
-
-- **Routines:** buttons for the categorizer, the Conexiom forwarder and the quote workbook
-- **Folders:** P: drive manuals (`P:\Manuals\Archive`) and ShareFile manuals (`S:\Personal Folders\Manuals`), opened in File Explorer
-- **Sites:** the Service Parts inbox in Outlook
-
-To change what it holds, edit the `FOLDERS` and `SITES` lists at the top of `hooks/quicklinks.tsx`.
-
 ## Slash commands
 
 Shortcuts for the Service Parts routines, in `commands/`. Each one asks Claude to run the matching skill, so that skill has to be enabled in your Claude account; without it, Claude will say it can't find it. Type `/` and the start of the name (for example `/categ`) to find one; the full names start with `pearson-theme:`.
@@ -57,7 +47,4 @@ Answer `y` to add the marketplace, then choose the user scope. The repository is
 - `hooks/register.tsx`: applies the theme when a session starts and draws the watermark
 - `hooks/backdrop.ts`: the Pearson mark, traced as vector shapes from the brand kit
 - `commands/`: the slash commands for the Service Parts routines
-- `hooks/routines.ts`: the routines behind the panel's buttons
-- `hooks/quicklinks.tsx`: the quick links panel
-- `tests/`: tests for the panel (`claude plugin test .`)
 - `hooks/make-colors.js`: the color builder from Claude's design system (don't edit)
