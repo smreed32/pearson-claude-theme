@@ -2,7 +2,7 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
-import { addQuickLinks, openQuickLinks } from './quicklinks.js'
+import { addQuickLinks, openQuickLinks, registerLinksCommand } from './quicklinks.js'
 import { addRoutines, registerRoutines } from './routines.js'
 
 // The Pearson circle mark as a faint watermark behind the conversation. No
@@ -46,8 +46,9 @@ export const register: Register = on => {
   })
 
   on('session.start', async ($, e, next) => {
-    await registerRoutines($)
-    await openQuickLinks($)
+    // Every command first, together, so all are in the list the app reads.
+    await Promise.all([registerRoutines($), registerLinksCommand($)])
+    openQuickLinks($)
 
     const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))
 

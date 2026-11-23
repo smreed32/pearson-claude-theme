@@ -42,18 +42,20 @@ const ROUTINES: readonly Routine[] = [
 
 // Called from session.start.
 export async function registerRoutines($: EngineInterface) {
-  for (const r of ROUTINES) {
-    try {
-      await $.command.register({
-        name: r.name,
-        description: r.description,
-        ...(r.argumentHint === undefined ? {} : { argumentHint: r.argumentHint }),
-      })
-    } catch (error) {
-      // Another plugin or skill already owns the name: leave it to that one.
-      $.ui.log(`/${r.name} not added: ${String(error)}`)
-    }
-  }
+  // All at once: the app reads the command list once as the session starts,
+  // and a command registered after that never shows up in it.
+  await Promise.all(
+    ROUTINES.map(r =>
+      $.command
+        .register({
+          name: r.name,
+          description: r.description,
+          ...(r.argumentHint === undefined ? {} : { argumentHint: r.argumentHint }),
+        })
+        // Another plugin or skill already owns the name: leave it to that one.
+        .catch(error => $.ui.log(`/${r.name} not added: ${String(error)}`)),
+    ),
+  )
 }
 
 // The routines the quick-links panel offers as buttons: the ones that need no

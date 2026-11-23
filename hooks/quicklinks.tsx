@@ -23,13 +23,18 @@ const SITES = [
   },
 ] as const
 
-// Called from session.start: adds /links and opens the panel.
-export async function openQuickLinks($: EngineInterface) {
+// Called first thing in session.start, alongside the routines' commands, so
+// /links is in the command list the app reads as the session starts.
+export async function registerLinksCommand($: EngineInterface) {
   try {
     await $.command.register({ name: 'links', description: 'Open the Pearson quick links panel' })
   } catch (error) {
     $.ui.log(`/links not added: ${String(error)}`)
   }
+}
+
+// Called from session.start once the commands are in: opens the panel.
+export function openQuickLinks($: EngineInterface) {
   void $.ui.open({ id: PANE, title: TITLE })
 }
 
