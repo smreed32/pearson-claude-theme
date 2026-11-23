@@ -56,6 +56,26 @@ export async function registerRoutines($: EngineInterface) {
   }
 }
 
+// The routines the quick-links panel offers as buttons: the ones that need no
+// machine number.
+export const PANEL_ROUTINES = ROUTINES.filter(r => r.needsArgs === undefined).map(r => ({
+  name: r.name,
+  description: r.description,
+}))
+
+// Asks Claude to run a routine's skill. Sent just after the caller returns, as
+// a command can't wait on its own prompt; it starts its own turn once the
+// session is idle.
+export function askRoutine($: EngineInterface, name: string, args = '') {
+  const r = ROUTINES.find(one => one.name === name)
+  if (r === undefined) {
+    return
+  }
+  const ask = args === '' ? r.ask : `${r.ask} ${args}.`
+  const text = `${ask} Use the ${r.skill} skill.`
+  $.clock.after(10, () => void $.prompt.submit({ text, asUser: true }))
+}
+
 export function addRoutines(on: On) {
   for (const r of ROUTINES) {
     on('command.run', { command: r.name }, async ($, e) => {
@@ -64,12 +84,7 @@ export function addRoutines(on: On) {
       if (r.needsArgs !== undefined && args === '') {
         return { text: r.needsArgs, isTextDisplayOnly: true }
       }
-      const ask = args === '' ? r.ask : `${r.ask} ${args}.`
-
-      // A command can't wait on its own prompt, so send it just after the
-      // command finishes; it starts its own turn once the session is idle.
-      const text = `${ask} Use the ${r.skill} skill.`
-      $.clock.after(10, () => void $.prompt.submit({ text, asUser: true }))
+      askRoutine($, r.name, args)
 
       return { text: `${r.description}: asking Claude now…`, isTextDisplayOnly: true }
     })

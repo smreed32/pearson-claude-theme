@@ -10,7 +10,17 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 - **Status colors:** Forest Green for success, Steel Blue for code accents
 - **Logo:** the full-color Pearson circle mark (orange disc, white box, gray flaps) in the upper-right corner, clear of the sidebar; hidden on narrow windows and phones
 
-The terminal and editor plugins don't draw themes, so it shows only in the desktop and mobile apps.
+It shows in the **Code** tab of the desktop app. Cowork, regular chats, claude.ai in a browser, the terminal and editor plugins don't draw themes.
+
+## Quick links panel
+
+A **Pearson quick links** panel opens beside the chat when a session starts. Type `/links` to bring it back after closing it. It holds:
+
+- **Routines:** buttons for the categorizer, the Conexiom forwarder and the quote workbook
+- **Folders:** P: drive manuals (`P:\Manuals\Archive`) and ShareFile manuals (`S:\Personal Folders\Manuals`), opened in File Explorer
+- **Sites:** the Service Parts inbox in Outlook
+
+To change what it holds, edit the `FOLDERS` and `SITES` lists at the top of `hooks/quicklinks.tsx`.
 
 ## Slash commands
 
@@ -22,6 +32,7 @@ Shortcuts for the Service Parts routines. Each one asks Claude to run the matchi
 | `/conexiom` | Forwards new POs in the Service Parts inbox to Conexiom | `serviceparts-conexiom-forwarder` |
 | `/quotes` | Builds a new Unconverted Quote Workbook from the latest export | `unconverted-quote-workbook` |
 | `/manual <machine number>` | Finds a machine's manual on the P: drive and zips it to ShareFile | `manual-search` |
+| `/links` | Opens the quick links panel | |
 
 ## Install
 
@@ -47,5 +58,6 @@ Answer `y` to add the marketplace, then choose the user scope. The repository is
 - `hooks/register.tsx`: applies the theme when a session starts and draws the watermark
 - `hooks/backdrop.ts`: the Pearson mark, traced as vector shapes from the brand kit
 - `hooks/routines.ts`: the slash commands for the Service Parts routines
-- `tests/routines.test.ts`: tests for the slash commands (`claude plugin test .`)
+- `hooks/quicklinks.tsx`: the quick links panel and `/links`
+- `tests/`: tests for the slash commands and the panel (`claude plugin test .`)
 - `hooks/make-colors.js`: the color builder from Claude's design system (don't edit)

@@ -2,6 +2,7 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
+import { addQuickLinks, openQuickLinks } from './quicklinks.js'
 import { addRoutines, registerRoutines } from './routines.js'
 
 // The Pearson circle mark as a faint watermark behind the conversation. No
@@ -32,6 +33,7 @@ const LOOK: ThemeSetArgs = {
 
 export const register: Register = on => {
   addRoutines(on)
+  addQuickLinks(on)
 
   on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
     if ((e.surface !== 'desktop' && e.surface !== 'mobile') || e.props.scene !== 'pearson-mark') {
@@ -45,6 +47,7 @@ export const register: Register = on => {
 
   on('session.start', async ($, e, next) => {
     await registerRoutines($)
+    await openQuickLinks($)
 
     const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))
 
