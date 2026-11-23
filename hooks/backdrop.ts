@@ -23,7 +23,8 @@ const LOGO = `
 // window's shorter side and pinned to the top right, so it stays round and
 // keeps its corner at any size: about 115 px tall in a 1100 px window, never
 // near the 36 px brand minimum. Windows too narrow to leave a gutter for it,
-// and phones, show the plain ground.
+// and phones, show the plain ground. The cutoff is in the app's own units, which display
+// scaling shrinks: at 150% a 2000 px wide window counts as about 1330.
 //
 // Behind it, a soft wash: a Blurple glow from the top left blending into a
 // Pearson Orange glow rising from the bottom right, both fading out toward
@@ -47,7 +48,7 @@ export const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" heigh
       .light { display: none; }
       .dark { display: inline; }
     }
-    @media (max-width: 1299px) {
+    @media (max-width: 1099px) {
       .mark { display: none; }
     }
   </style>

@@ -49,6 +49,9 @@ export const register: Register = on => {
       $.ui.toast(unpainted)
     }
 
+    // The session starts before the app's window connects, so the set often
+    // reports "not drawn yet"; the look stands and draws once it connects,
+    // so that's logged rather than put in the status bar.
     let set
     try {
       set = await $.theme.set(LOOK)
@@ -58,7 +61,7 @@ export const register: Register = on => {
     }
 
     if (!set.isDrawn) {
-      $.ui.status(set.reason)
+      $.ui.log(set.reason)
     }
 
     return next(e)
