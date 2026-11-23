@@ -35,9 +35,12 @@ export async function openQuickLinks($: EngineInterface) {
 
 export function addQuickLinks(on: On) {
   on('command.run', { command: 'links' }, async $ => {
-    await $.ui.open({ id: PANE, title: TITLE })
+    const opened = await $.ui.open({ id: PANE, title: TITLE, focus: true })
+    const text = opened.isPlaced
+      ? 'Pearson quick links opened.'
+      : `The app kept the quick links panel hidden: ${opened.reason}`
 
-    return { text: 'Pearson quick links opened.', isTextDisplayOnly: true }
+    return { text, isTextDisplayOnly: true }
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, ($, e) => {
