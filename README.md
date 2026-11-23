@@ -9,7 +9,6 @@ A Pearson Packaging Systems look for the Claude desktop and mobile apps, built o
 - **Headings:** bold Orange in Claude's replies
 - **Your messages:** Blurple boxes with white text and a thin Orange border
 - **Status colors:** Forest Green for success, Steel Blue for code accents
-- **Logo:** the full-color Pearson circle mark (orange disc, white box, gray flaps) in the upper-right corner, clear of the sidebar; hidden on narrow windows and phones
 
 It shows in the **Code** tab of the desktop app. Cowork, regular chats, claude.ai in a browser, the terminal and editor plugins don't draw themes.
 
@@ -45,7 +44,7 @@ Answer `y` to add the marketplace, then choose the user scope. The repository is
 ## Files
 
 - `hooks/colors.ts`: the brand palette and the light and dark color sets
-- `hooks/register.tsx`: applies the theme when a session starts and draws the watermark
-- `hooks/backdrop.ts`: the Pearson mark, traced as vector shapes from the brand kit
+- `hooks/register.tsx`: applies the theme when a session starts and draws the gradient backdrop
+- `hooks/backdrop.ts`: the Blurple and Orange gradient backdrop
 - `commands/`: the slash commands for the Service Parts routines
 - `hooks/make-colors.js`: the color builder from Claude's design system (don't edit)

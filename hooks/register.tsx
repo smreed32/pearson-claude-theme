@@ -3,9 +3,9 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 import { SCENE } from './backdrop.js'
 import { BRAND, problems, theme } from './colors.js'
 
-// The gradient and the Pearson mark behind the conversation. The app lays a
-// tinted glass over a backdrop (60% by default), which all but hid the
-// gradient and dulled the logo; the gradient already fades out behind the
+// The gradient behind the conversation. The app lays a tinted glass over a
+// backdrop (60% by default), which all but hid the gradient; the gradient
+// already fades out behind the
 // text, so the glass is kept thin and unblurred.
 const BASE: ThemeSetArgs = {
   colors: theme,
@@ -39,7 +39,7 @@ export const register: Register = on => {
 
     const { Svg } = $.ui.resolve(e)
 
-    return <Svg source={SCENE} alt="The Pearson Packaging Systems circle mark, faint in the corner" />
+    return <Svg source={SCENE} alt="A soft Blurple and Orange gradient" />
   })
 
   on('session.start', async ($, e, next) => {
